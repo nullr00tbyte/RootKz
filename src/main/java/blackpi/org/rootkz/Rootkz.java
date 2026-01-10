@@ -48,7 +48,7 @@ public class Rootkz implements ModInitializer {
                 return new RastaTraderManager(props);
             });
 
-            manager.spawn(serverWorld, true, true);
+            manager.spawn(serverWorld, true);
         });
     }
 }

@@ -20,7 +20,7 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.random.Random;
-import net.minecraft.world.GameRules;
+import net.minecraft.world.rule.GameRules; // 1.21.11
 import net.minecraft.world.Heightmap.Type;
 import net.minecraft.world.level.ServerWorldProperties;
 import net.minecraft.world.poi.PointOfInterestStorage;
@@ -58,35 +58,36 @@ public class RastaTraderManager implements SpecialSpawner {
 
     }
 
-    public int spawn(ServerWorld world, boolean spawnMonsters, boolean spawnAnimals) {
-        if (!world.getGameRules().getBoolean(GameRules.DO_TRADER_SPAWNING)) {
-            return 0;
-        } else if (--this.spawnTimer > 0) {
-            return 0;
-        } else {
-            this.spawnTimer = 1200;
-            this.spawnDelay -= 1200;
-            this.properties.setWanderingTraderSpawnDelay(this.spawnDelay);
-            if (this.spawnDelay > 0) {
-                return 0;
-            } else {
-                this.spawnDelay = 24000;
-                if (!world.getGameRules().getBoolean(GameRules.DO_MOB_SPAWNING)) {
-                    return 0;
-                } else {
-                    int i = this.spawnChance;
-                    this.spawnChance = MathHelper.clamp(this.spawnChance + 25, 25, 75);
-                    this.properties.setWanderingTraderSpawnChance(this.spawnChance);
-                    if (this.random.nextInt(100) > i) {
-                        return 0;
-                    } else if (this.trySpawn(world)) {
-                        this.spawnChance = 25;
-                        return 1;
-                    } else {
-                        return 0;
-                    }
-                }
-            }
+    @Override
+    public void spawn(ServerWorld world, boolean spawnMonsters) {
+        if (--this.spawnTimer > 0) {
+            return;
+        }
+
+        this.spawnTimer = 1200;
+        this.spawnDelay -= 1200;
+        this.properties.setWanderingTraderSpawnDelay(this.spawnDelay);
+
+        if (this.spawnDelay > 0) {
+            return;
+        }
+
+        this.spawnDelay = 24000;
+
+        if (!world.getGameRules().getValue(GameRules.DO_MOB_SPAWNING)) {
+            return;
+        }
+
+        int i = this.spawnChance;
+        this.spawnChance = MathHelper.clamp(this.spawnChance + 25, 25, 75);
+        this.properties.setWanderingTraderSpawnChance(this.spawnChance);
+
+        if (this.random.nextInt(100) > i) {
+            return;
+        }
+
+        if (this.trySpawn(world)) {
+            this.spawnChance = 25;
         }
     }
 

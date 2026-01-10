@@ -2,8 +2,8 @@
 	"credit": "Made with Blockbench",
 	"parent": "block/cube",
 	"textures": {
-		"0": "rootkz:item/weed_seed",
-		"particle": "rootkz:item/weed_seed"
+		"0": "rootkz:block/weed_seed",
+		"particle": "rootkz:block/weed_seed"
 	},
 	"elements": [
 		{

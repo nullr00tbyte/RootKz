@@ -22,7 +22,11 @@ public class RastaEntityRenderer extends MobEntityRenderer<WanderingTraderEntity
 
     public RastaEntityRenderer(EntityRendererFactory.Context context) {
         super(context, new VillagerResemblingModel(context.getPart(EntityModelLayers.WANDERING_TRADER)), 0.5F);
-        this.addFeature(new HeadFeatureRenderer<>(this, context.getEntityModels()));
+        this.addFeature(new HeadFeatureRenderer<>(
+                this,                               // FeatureRendererContext
+                context.getEntityModels(),          // LoadedEntityModels
+                context.getPlayerSkinCache()              // PlayerSkinCache
+        ));
         this.addFeature(new VillagerHeldItemFeatureRenderer<>(this));
     }
 
