@@ -26,11 +26,14 @@ public class WeedLootTableProvider extends FabricBlockLootTableProvider {
         // Loot cuando el cultivo está maduro (AGE == 7)
         LootPool.Builder maturePool = LootPool.builder()
                 .conditionally(BlockStatePropertyLootCondition.builder(ModBlocks.WEED_CROP)
-                        .properties(StatePredicate.Builder.create().exactMatch(WeedCropBlock.AGE, 7)))
+                        .properties(StatePredicate.Builder.create()
+                                .exactMatch(WeedCropBlock.AGE, 7)))
                 .with(ItemEntry.builder(ModItems.BUD)
-                        .apply(SetCountLootFunction.builder(ConstantLootNumberProvider.create(5))))
-                .with(ItemEntry.builder(ModItems.WEED_SEED))
-                        .apply(SetCountLootFunction.builder(ConstantLootNumberProvider.create(2)));
+                        .apply(SetCountLootFunction.builder(
+                                ConstantLootNumberProvider.create(5))))
+                .with(ItemEntry.builder(ModItems.WEED_SEED)
+                        .apply(SetCountLootFunction.builder(
+                                ConstantLootNumberProvider.create(2))));
 
         // Loot por defecto (para cualquier otro estado de crecimiento)
         LootPool.Builder defaultSeedPool = LootPool.builder()

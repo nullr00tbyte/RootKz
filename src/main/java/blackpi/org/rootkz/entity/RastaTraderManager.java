@@ -117,7 +117,7 @@ public class RastaTraderManager implements SpecialSpawner {
                     }
 
                     this.properties.setWanderingTraderId(RastaEntity.getUuid());
-                    RastaEntity.setDespawnDelay(48000);
+                    RastaEntity.setDespawnDelay(48000); // Incrementar?
                     RastaEntity.setWanderTarget(blockPos2);
                     RastaEntity.setPositionTarget(blockPos2, 16);
                     return true;
